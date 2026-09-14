@@ -1,0 +1,40 @@
+{
+  "name": "rag-agent",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Intelligent RAG (Retrieval-Augmented Generation) AI Agent built with TypeScript and Google Gemini",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx src/server.ts",
+    "cli": "tsx src/cli.ts",
+    "test": "tsx tests/rag.test.ts"
+  },
+  "keywords": [
+    "gemini",
+    "rag",
+    "ai-agent",
+    "retrieval-augmented-generation",
+    "vector-search",
+    "embeddings",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/adk": "^2.0.0",
+    "@google/genai": "latest",
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
