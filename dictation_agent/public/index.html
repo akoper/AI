@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google AI Voice Dictation Agent</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-icon">🎙️</div>
+        <div>
+          <h1>Voice Dictation Agent</h1>
+          <p class="subtitle">Powered by Google GenAI & Speech API</p>
+        </div>
+      </div>
+      <div class="api-badge" id="apiStatusBadge">
+        <span class="status-dot"></span>
+        <span id="apiStatusText">Checking API...</span>
+      </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="main-content">
+      <!-- Left Panel: Dictation & Controls -->
+      <section class="panel left-panel">
+        <div class="panel-header">
+          <h2>Speech Input & Dictation</h2>
+          <span class="badge" id="speechSupportBadge">Web Speech Ready</span>
+        </div>
+
+        <!-- Mic & Dictation Hero Area -->
+        <div class="mic-container">
+          <button id="micBtn" class="mic-button" title="Click to Start / Stop Dictating">
+            <div class="mic-icon">🎤</div>
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring second"></div>
+          </button>
+          <div class="mic-status-container">
+            <span id="micStatus" class="mic-status">Click microphone to start dictating</span>
+            <div id="audioWave" class="audio-wave hidden">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dictated Text Area -->
+        <div class="input-group">
+          <div class="input-header">
+            <label for="dictationInput">Dictated / Spoken Text</label>
+            <div class="text-actions">
+              <button id="clearTextBtn" class="btn-text" title="Clear text">Clear</button>
+              <button id="copyTextBtn" class="btn-text" title="Copy to clipboard">Copy</button>
+            </div>
+          </div>
+          <textarea
+            id="dictationInput"
+            placeholder="Your spoken words will appear here in real time... You can also edit or type directly."
+            rows="6"
+          ></textarea>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-grid">
+          <button id="talkAgentBtn" class="btn btn-primary" title="Send speech to Agent for response">
+            <span>🤖 Talk to Agent</span>
+          </button>
+          <button id="readDictationBtn" class="btn btn-accent" title="Click to read your dictation back to you">
+            <span>🔊 Read Back to Me</span>
+          </button>
+          <button id="polishBtn" class="btn btn-secondary" title="Polish grammar, punctuation and remove fillers">
+            <span>✨ Clean & Polish</span>
+          </button>
+          <button id="bulletBtn" class="btn btn-secondary" title="Convert to bullet points">
+            <span>📋 Bullet Points</span>
+          </button>
+          <button id="summaryBtn" class="btn btn-secondary" title="Summarize dictation">
+            <span>📝 Summarize</span>
+          </button>
+          <button id="emailBtn" class="btn btn-secondary" title="Format as email">
+            <span>✉️ Draft Email</span>
+          </button>
+        </div>
+
+        <!-- Voice & Audio Settings -->
+        <div class="settings-card">
+          <div class="settings-header">
+            <h3>🔊 Voice Playback Settings</h3>
+            <button id="stopAudioBtn" class="btn-small btn-danger" disabled title="Stop playback">⏹ Stop Speech</button>
+          </div>
+          <div class="settings-row">
+            <label for="voiceSelect">Voice:</label>
+            <select id="voiceSelect" class="select-input"></select>
+          </div>
+          <div class="settings-row dual">
+            <div class="slider-group">
+              <label for="rateSlider">Speed: <span id="rateVal">1.0x</span></label>
+              <input type="range" id="rateSlider" min="0.5" max="2" step="0.1" value="1.0" />
+            </div>
+            <div class="slider-group">
+              <label for="pitchSlider">Pitch: <span id="pitchVal">1.0</span></label>
+              <input type="range" id="pitchSlider" min="0.5" max="1.5" step="0.1" value="1.0" />
+            </div>
+          </div>
+          <div class="settings-row toggle-row">
+            <label class="switch-label" for="autoReadToggle">
+              <input type="checkbox" id="autoReadToggle" />
+              <span class="slider round"></span>
+              <span>Auto-read agent responses back immediately</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Conversation & Result Output -->
+      <section class="panel right-panel">
+        <div class="panel-header">
+          <h2>Agent Conversation & Outputs</h2>
+          <button id="clearChatBtn" class="btn-text">Clear Chat</button>
+        </div>
+
+        <!-- Chat / Output Stream -->
+        <div id="chatStream" class="chat-stream">
+          <div class="message system-message">
+            <div class="message-content">
+              👋 <strong>Welcome to your Voice Dictation Agent!</strong>
+              <p>1. Click the microphone and speak naturally.</p>
+              <p>2. Click <strong>"🔊 Read Back to Me"</strong> anytime to listen to your words read aloud.</p>
+              <p>3. Click <strong>"🤖 Talk to Agent"</strong> to chat with Gemini, or use <strong>"✨ Clean & Polish"</strong> to refine your dictation.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Indicator -->
+        <div id="loadingIndicator" class="loading-indicator hidden">
+          <div class="spinner"></div>
+          <span id="loadingText">Agent is processing...</span>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>Google AI Agent • TypeScript • Loaded with <code>.env</code> API Key</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
