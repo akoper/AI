@@ -1,0 +1,44 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="sunGradient" cx="50%" cy="100%" r="75%" fx="50%" fy="100%">
+      <stop offset="0%" stop-color="#FFD700" />
+      <stop offset="20%" stop-color="#FFA500" />
+      <stop offset="50%" stop-color="#FF4500" />
+      <stop offset="100%" stop-color="#8B0000" />
+    </radialGradient>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4682B4" />
+      <stop offset="40%" stop-color="#8A2BE2" />
+      <stop offset="70%" stop-color="#FF6347" />
+      <stop offset="100%" stop-color="#FFD700" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect x="0" y="0" width="800" height="600" fill="url(#skyGradient)" />
+
+  <!-- Sun -->
+  <circle cx="400" cy="550" r="180" fill="url(#sunGradient)">
+    <animate attributeName="r" from="180" to="190" dur="4s" begin="0s" repeatCount="indefinite" />
+    <animate attributeName="cy" from="550" to="545" dur="4s" begin="0s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- Far Mountains -->
+  <path d="M0 450 L150 250 L300 350 L500 200 L650 300 L800 180 V600 H0 Z" fill="#2c3e50" opacity="0.8">
+    <animate attributeName="fill" values="#2c3e50;#34495e;#2c3e50" dur="8s" repeatCount="indefinite" />
+  </path>
+
+  <!-- Mid Mountains -->
+  <path d="M0 500 L100 350 L250 420 L400 300 L550 400 L700 320 L800 450 V600 H0 Z" fill="#34495e" opacity="0.9">
+    <animate attributeName="fill" values="#34495e;#2c3e50;#34495e" dur="8s" repeatCount="indefinite" />
+  </path>
+
+  <!-- Foreground Mountains -->
+  <path d="M0 600 L200 450 L450 550 L600 480 L800 580 V600 H0 Z" fill="#1c2c36" />
+
+  <!-- Sun Glow/Halo -->
+  <circle cx="400" cy="550" r="220" fill="none" stroke="#FFD700" stroke-width="5" opacity="0.2">
+    <animate attributeName="r" from="220" to="230" dur="4s" begin="0s" repeatCount="indefinite" />
+    <animate attributeName="cy" from="550" to="545" dur="4s" begin="0s" repeatCount="indefinite" />
+  </circle>
+</svg>

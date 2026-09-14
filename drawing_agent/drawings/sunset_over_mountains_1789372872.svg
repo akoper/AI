@@ -1,0 +1,20 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sunsetGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff7e5f;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#feb47b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffeedd;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a3b4e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c222e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="800" height="600" fill="url(#sunsetGradient)" />
+  <circle cx="400" cy="200" r="100" fill="#fdb813">
+    <animate attributeName="r" from="100" to="110" dur="4s" begin="0s" repeatCount="indefinite" />
+    <animate attributeName="opacity" from="1" to="0.8" dur="4s" begin="0s" repeatCount="indefinite" />
+  </circle>
+  <path d="M0 450 L200 250 L400 350 L600 200 L800 400 L800 600 L0 600 Z" fill="url(#mountainGradient)" />
+  <path d="M0 500 L150 350 L350 450 L550 300 L700 480 L800 450 L800 600 L0 600 Z" fill="#2c222e" opacity="0.8" />
+</svg>

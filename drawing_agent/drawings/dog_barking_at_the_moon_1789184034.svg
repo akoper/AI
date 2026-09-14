@@ -1,0 +1,59 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1128;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00010c;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:rgb(255,255,200);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(200,200,150);stop-opacity:0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Night Sky -->
+  <rect x="0" y="0" width="800" height="600" fill="url(#skyGradient)" />
+
+  <!-- Ground -->
+  <path d="M0 600 L0 450 C200 400, 600 400, 800 450 L800 600 Z" fill="#2D2D2D" />
+  <path d="M0 600 L0 500 C200 470, 600 470, 800 500 L800 600 Z" fill="#1A1A1A" />
+
+  <!-- Moon -->
+  <circle cx="650" cy="150" r="80" fill="#FDFD96" stroke="#e0e080" stroke-width="2"/>
+  <circle cx="630" cy="130" r="15" fill="#e0e080" />
+  <circle cx="680" cy="170" r="10" fill="#e0e080" />
+  <circle cx="660" cy="100" r="8" fill="#e0e080" />
+
+  <!-- Stars -->
+  <circle cx="100" cy="50" r="2" fill="white" />
+  <circle cx="50" cy="120" r="1.5" fill="white" />
+  <circle cx="200" cy="80" r="2.5" fill="white" />
+  <circle cx="300" cy="30" r="1.8" fill="white" />
+  <circle cx="450" cy="70" r="2" fill="white" />
+  <circle cx="750" cy="50" r="1.5" fill="white" />
+  <circle cx="550" cy="10" r="1.2" fill="white" />
+
+  <!-- Dog (simplified silhouette) -->
+  <g transform="translate(200, 350)">
+    <!-- Body -->
+    <path d="M50 150 C20 120, 0 80, 20 50 L100 50 C120 20, 180 20, 200 50 L250 80 C280 100, 280 140, 250 160 L150 170 Z" fill="#8B4513" />
+    <!-- Head -->
+    <path d="M220 50 C250 20, 280 30, 270 70 C260 90, 230 100, 200 90 Z" fill="#8B4513" />
+    <!-- Snout -->
+    <path d="M270 70 C280 60, 290 60, 290 70 C290 80, 280 80, 270 70 Z" fill="#5A2E0C" />
+    <!-- Ear 1 -->
+    <path d="M220 50 Q200 30, 200 10 L230 0 Q250 20, 250 40 Z" fill="#8B4513" stroke="#5A2E0C" stroke-width="2"/>
+     <!-- Ear 2 (hidden or partially visible) -->
+    <path d="M210 55 Q195 35, 195 15 L225 5 Q240 25, 240 45 Z" fill="#8B4513" stroke="#5A2E0C" stroke-width="2" transform="rotate(-10 210 55)"/>
+
+    <!-- Tail -->
+    <path d="M70 165 C50 180, 40 200, 60 210 C80 220, 100 200, 100 180 Z" fill="#8B4513" />
+    <!-- Legs (simplified) -->
+    <rect x="80" y="160" width="20" height="40" fill="#8B4513" />
+    <rect x="120" y="160" width="20" height="40" fill="#8B4513" />
+    <rect x="180" y="160" width="20" height="40" fill="#8B4513" />
+    <rect x="220" y="160" width="20" height="40" fill="#8B4513" />
+  </g>
+   <!-- Barking sound lines -->
+  <path d="M480 400 L500 380 M490 405 L515 385 M485 395 L505 375" stroke="white" stroke-width="3" stroke-linecap="round" fill="none" transform="rotate(-20 490 400) translate(-30, -50)" />
+
+</svg>

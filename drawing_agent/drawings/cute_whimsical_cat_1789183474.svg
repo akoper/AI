@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#fdfbfb"/>
+      <stop offset="100%" stop-color="#ebedee"/>
+    </radialGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <!-- Cat Body -->
+  <ellipse cx="400" cy="420" rx="140" ry="120" fill="#f97316"/>
+  <!-- Head -->
+  <circle cx="400" cy="270" r="95" fill="#f97316"/>
+  <!-- Ears -->
+  <polygon points="320,230 350,140 380,200" fill="#ea580c"/>
+  <polygon points="335,215 350,160 370,195" fill="#fbcfe8"/>
+  <polygon points="480,230 450,140 420,200" fill="#ea580c"/>
+  <polygon points="465,215 450,160 430,195" fill="#fbcfe8"/>
+  <!-- Eyes -->
+  <ellipse cx="365" cy="265" rx="14" ry="20" fill="#0284c7"/>
+  <circle cx="362" cy="260" r="5" fill="#ffffff"/>
+  <ellipse cx="435" cy="265" rx="14" ry="20" fill="#0284c7"/>
+  <circle cx="432" cy="260" r="5" fill="#ffffff"/>
+  <!-- Nose & Mouth -->
+  <polygon points="395,290 405,290 400,298" fill="#ec4899"/>
+  <path d="M 390 305 Q 400 315 400 300 Q 400 315 410 305" stroke="#333" stroke-width="3" fill="none"/>
+  <!-- Whiskers -->
+  <line x1="330" y1="290" x2="270" y2="280" stroke="#475569" stroke-width="2"/>
+  <line x1="330" y1="300" x2="265" y2="305" stroke="#475569" stroke-width="2"/>
+  <line x1="470" y1="290" x2="530" y2="280" stroke="#475569" stroke-width="2"/>
+  <line x1="470" y1="300" x2="535" y2="305" stroke="#475569" stroke-width="2"/>
+</svg>

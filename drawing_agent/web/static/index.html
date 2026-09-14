@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini Drawing Agent Studio</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="logo-area">
+        <div class="logo-icon">✨🎨</div>
+        <div class="logo-text">
+          <h1>Gemini Drawing Agent</h1>
+          <span class="badge">Google ADK</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div id="statusBadge" class="status-indicator">
+          <span class="dot"></span>
+          <span id="statusText">Checking...</span>
+        </div>
+        <button id="galleryBtn" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          Gallery (<span id="galleryCount">0</span>)
+        </button>
+        <button id="clearBtn" class="btn btn-danger-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          Clear
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace">
+      <!-- Left Panel: Chat -->
+      <section class="panel chat-panel">
+        <div class="panel-header">
+          <h2>💬 Talk to Agent</h2>
+          <span class="subtext">Describe any scene, object, or concept</span>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="message assistant">
+            <div class="avatar">🎨</div>
+            <div class="bubble">
+              <p>Hello! I am your <strong>Gemini Drawing Agent</strong> powered by Google ADK. Tell me what you'd like to see, and I will draw it for you!</p>
+              <div class="quick-prompts">
+                <button class="chip" data-prompt="Draw a cozy illuminated cabin in a snowy pine forest under the aurora borealis">🏔️ Snowy Cabin Aurora</button>
+                <button class="chip" data-prompt="Draw a glowing neon cyberpunk city with flying vehicles and rain reflections">🌆 Cyberpunk City</button>
+                <button class="chip" data-prompt="Draw an adorable baby dragon curled around a glowing crystal">🐉 Baby Dragon</button>
+                <button class="chip" data-prompt="Draw a tranquil Japanese zen garden with koi pond and cherry blossoms">🌸 Zen Garden</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <form id="chatForm">
+            <textarea id="promptInput" placeholder="Tell the agent what to draw... (e.g. 'Draw a whimsical cosmic lighthouse in deep space')" rows="2"></textarea>
+            <button type="submit" id="sendBtn" class="send-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </form>
+          <div class="input-hint">
+            <span>Tip: You can ask to modify the drawing, e.g. <em>"add a glowing moon in the sky"</em></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Canvas / Studio -->
+      <section class="panel canvas-panel">
+        <div class="panel-header canvas-header">
+          <div class="canvas-title-info">
+            <h2 id="currentDrawingTitle">Canvas</h2>
+            <span id="currentDrawingMeta" class="drawing-meta">No drawing yet</span>
+          </div>
+          <div class="canvas-tabs">
+            <button id="viewVisualTab" class="tab-btn active">Visual View</button>
+            <button id="viewCodeTab" class="tab-btn">SVG Code</button>
+          </div>
+        </div>
+
+        <div class="canvas-viewport" id="canvasViewport">
+          <div id="visualContainer" class="visual-container">
+            <div id="drawingPlaceholder" class="drawing-placeholder">
+              <div class="placeholder-icon">🎨</div>
+              <h3>Canvas is ready</h3>
+              <p>Type a request in the chat to start drawing!</p>
+            </div>
+            <div id="svgWrapper" class="svg-wrapper" style="display: none;"></div>
+            <img id="rasterImage" class="raster-image" style="display: none;" alt="Rendered Artwork" />
+          </div>
+
+          <div id="codeContainer" class="code-container" style="display: none;">
+            <pre><code id="svgCodeDisplay"></code></pre>
+          </div>
+        </div>
+
+        <!-- Canvas Controls & Actions -->
+        <div class="canvas-footer">
+          <div class="zoom-controls">
+            <button id="zoomOutBtn" class="control-btn" title="Zoom Out">-</button>
+            <span id="zoomLevelText">100%</span>
+            <button id="zoomInBtn" class="control-btn" title="Zoom In">+</button>
+            <button id="resetZoomBtn" class="control-btn" title="Reset Zoom">Fit</button>
+          </div>
+          <div class="export-actions">
+            <button id="downloadSvgBtn" class="btn btn-secondary" disabled>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              SVG
+            </button>
+            <button id="downloadPngBtn" class="btn btn-primary" disabled>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download PNG
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Artwork Gallery</h3>
+          <button id="closeGalleryBtn" class="close-btn">&times;</button>
+        </div>
+        <div id="galleryGrid" class="gallery-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
