@@ -1,0 +1,966 @@
+[
+  {
+    "id": "session_1789437554383_0zdam",
+    "title": "Test Session",
+    "createdAt": "2026-09-15T01:59:14.384Z",
+    "updatedAt": "2026-09-15T01:59:14.384Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_1789437554389_oydg8",
+    "title": "Turn Test",
+    "createdAt": "2026-09-15T01:59:14.389Z",
+    "updatedAt": "2026-09-15T01:59:14.390Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "id": "msg_1",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Hello, what is Google ADK?"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:14.390Z",
+        "turnNumber": 1
+      },
+      {
+        "id": "msg_2",
+        "role": "model",
+        "parts": [
+          {
+            "text": "Google ADK is the Agent Development Kit."
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:14.390Z",
+        "turnNumber": 1
+      },
+      {
+        "id": "msg_3",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Can it handle multiple turns?"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:14.390Z",
+        "turnNumber": 2
+      }
+    ],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_1789437554392_6jcvq",
+    "title": "Original Branch",
+    "createdAt": "2026-09-15T01:59:14.392Z",
+    "updatedAt": "2026-09-15T01:59:14.393Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "id": "m1",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Turn 1 User"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:14.392Z",
+        "turnNumber": 1
+      },
+      {
+        "id": "m2",
+        "role": "model",
+        "parts": [
+          {
+            "text": "Turn 1 Model"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:14.392Z",
+        "turnNumber": 1
+      },
+      {
+        "id": "m3",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Turn 2 User"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:14.393Z",
+        "turnNumber": 2
+      }
+    ],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_fork_1789437554393_nhro",
+    "title": "Fork of Original Branch (Turn 1)",
+    "createdAt": "2026-09-15T01:59:14.393Z",
+    "updatedAt": "2026-09-15T01:59:14.393Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "id": "m1",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Turn 1 User"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:14.392Z",
+        "turnNumber": 1
+      },
+      {
+        "id": "m2",
+        "role": "model",
+        "parts": [
+          {
+            "text": "Turn 1 Model"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:14.392Z",
+        "turnNumber": 1
+      }
+    ],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    },
+    "parentSessionId": "session_1789437554392_6jcvq",
+    "forkedAtTurn": 1
+  },
+  {
+    "id": "session_1789437554394_jsmo2",
+    "title": "Clear Me",
+    "createdAt": "2026-09-15T01:59:14.394Z",
+    "updatedAt": "2026-09-15T01:59:14.395Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_1789437554520_vrmbl",
+    "title": "Context Retention Test",
+    "createdAt": "2026-09-15T01:59:14.520Z",
+    "updatedAt": "2026-09-15T01:59:16.135Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "id": "msg_1789437554521_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Remember that my name is Alice"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:14.521Z",
+        "turnNumber": 1,
+        "tokenEstimate": 8
+      },
+      {
+        "id": "msg_1789437556135_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "Got it, Alice! I'll remember that your name is Alice.\n"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:16.135Z",
+        "turnNumber": 1,
+        "toolCalls": [
+          {
+            "id": "tool_1789437555596_a288",
+            "name": "store_memory",
+            "args": {
+              "key": "user_name",
+              "value": "Alice"
+            },
+            "timestamp": "2026-09-15T01:59:15.596Z",
+            "result": {
+              "success": true,
+              "key": "user_name",
+              "value": "Alice",
+              "message": "Saved \"user_name\" to memory."
+            },
+            "durationMs": 0
+          }
+        ],
+        "tokenEstimate": 14
+      }
+    ],
+    "memory": {
+      "facts": {
+        "user_name": "Alice"
+      },
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_1789437556139_gk893",
+    "title": "Hello agent",
+    "createdAt": "2026-09-15T01:59:16.139Z",
+    "updatedAt": "2026-09-15T01:59:16.476Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "id": "msg_1789437556139_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Hello agent"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:16.139Z",
+        "turnNumber": 1,
+        "tokenEstimate": 3
+      },
+      {
+        "id": "msg_1789437556476_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "Hello! How can I help you today?\n"
+          }
+        ],
+        "timestamp": "2026-09-15T01:59:16.476Z",
+        "turnNumber": 1,
+        "toolCalls": [],
+        "tokenEstimate": 9
+      }
+    ],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_1789437661582_uaopm",
+    "title": "HTTP Chat",
+    "createdAt": "2026-09-15T02:01:01.582Z",
+    "updatedAt": "2026-09-15T02:01:05.053Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "id": "msg_1789437661599_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Calculate 12 * 12"
+          }
+        ],
+        "timestamp": "2026-09-15T02:01:01.599Z",
+        "turnNumber": 1,
+        "tokenEstimate": 5
+      },
+      {
+        "id": "msg_1789437662896_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "12 multiplied by 12 is 144.\n"
+          }
+        ],
+        "timestamp": "2026-09-15T02:01:02.896Z",
+        "turnNumber": 1,
+        "toolCalls": [
+          {
+            "id": "tool_1789437662391_dumb",
+            "name": "calculate",
+            "args": {
+              "expression": "12 * 12"
+            },
+            "timestamp": "2026-09-15T02:01:02.391Z",
+            "result": {
+              "expression": "12 * 12",
+              "result": 144,
+              "success": true
+            },
+            "durationMs": 0
+          }
+        ],
+        "tokenEstimate": 7
+      },
+      {
+        "id": "msg_1789437662915_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Add todo: Write documentation"
+          }
+        ],
+        "timestamp": "2026-09-15T02:01:02.915Z",
+        "turnNumber": 2,
+        "tokenEstimate": 8
+      },
+      {
+        "id": "msg_1789437665053_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "I've added \"Write documentation\" to your to-do list."
+          }
+        ],
+        "timestamp": "2026-09-15T02:01:05.053Z",
+        "turnNumber": 2,
+        "toolCalls": [
+          {
+            "id": "tool_1789437663837_rdb6",
+            "name": "manage_todos",
+            "args": {
+              "task": "Write documentation",
+              "action": "add"
+            },
+            "timestamp": "2026-09-15T02:01:03.837Z",
+            "result": {
+              "success": true,
+              "action": "add",
+              "todo": {
+                "id": "todo_1789437663837_icum",
+                "task": "Write documentation",
+                "completed": false,
+                "createdAt": "2026-09-15T02:01:03.837Z"
+              },
+              "total": 1
+            },
+            "durationMs": 0
+          }
+        ],
+        "tokenEstimate": 13
+      }
+    ],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": [
+        {
+          "id": "todo_1789437663837_icum",
+          "task": "Write documentation",
+          "completed": false,
+          "createdAt": "2026-09-15T02:01:03.837Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "session_1789437665085_1gen9",
+    "title": "Fork Source",
+    "createdAt": "2026-09-15T02:01:05.085Z",
+    "updatedAt": "2026-09-15T02:01:05.085Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_fork_1789437665100_9e0i",
+    "title": "Fork of Fork Source (Turn 0)",
+    "createdAt": "2026-09-15T02:01:05.100Z",
+    "updatedAt": "2026-09-15T02:01:05.100Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    },
+    "parentSessionId": "session_1789437665085_1gen9"
+  },
+  {
+    "id": "session_1789437692413_cyeqy",
+    "title": "HTTP Chat",
+    "createdAt": "2026-09-15T02:01:32.413Z",
+    "updatedAt": "2026-09-15T02:01:34.964Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "id": "msg_1789437692428_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Calculate 12 * 12"
+          }
+        ],
+        "timestamp": "2026-09-15T02:01:32.428Z",
+        "turnNumber": 1,
+        "tokenEstimate": 5
+      },
+      {
+        "id": "msg_1789437693869_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "12 multiplied by 12 is 144.\n"
+          }
+        ],
+        "timestamp": "2026-09-15T02:01:33.869Z",
+        "turnNumber": 1,
+        "toolCalls": [
+          {
+            "id": "tool_1789437693268_ld3k",
+            "name": "calculate",
+            "args": {
+              "expression": "12 * 12"
+            },
+            "timestamp": "2026-09-15T02:01:33.268Z",
+            "result": {
+              "expression": "12 * 12",
+              "result": 144,
+              "success": true
+            },
+            "durationMs": 1
+          }
+        ],
+        "tokenEstimate": 7
+      },
+      {
+        "id": "msg_1789437693887_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Add todo: Write documentation"
+          }
+        ],
+        "timestamp": "2026-09-15T02:01:33.887Z",
+        "turnNumber": 2,
+        "tokenEstimate": 8
+      },
+      {
+        "id": "msg_1789437694964_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "I've added \"Write documentation\" to your to-do list."
+          }
+        ],
+        "timestamp": "2026-09-15T02:01:34.964Z",
+        "turnNumber": 2,
+        "toolCalls": [
+          {
+            "id": "tool_1789437694490_vr1v",
+            "name": "manage_todos",
+            "args": {
+              "task": "Write documentation",
+              "action": "add"
+            },
+            "timestamp": "2026-09-15T02:01:34.490Z",
+            "result": {
+              "success": true,
+              "action": "add",
+              "todo": {
+                "id": "todo_1789437694490_ger1",
+                "task": "Write documentation",
+                "completed": false,
+                "createdAt": "2026-09-15T02:01:34.490Z"
+              },
+              "total": 1
+            },
+            "durationMs": 0
+          }
+        ],
+        "tokenEstimate": 13
+      }
+    ],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": [
+        {
+          "id": "todo_1789437694490_ger1",
+          "task": "Write documentation",
+          "completed": false,
+          "createdAt": "2026-09-15T02:01:34.490Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "session_1789437694990_mag9z",
+    "title": "Fork Source",
+    "createdAt": "2026-09-15T02:01:34.990Z",
+    "updatedAt": "2026-09-15T02:01:34.990Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_fork_1789437695005_kb9n",
+    "title": "Fork of Fork Source (Turn 0)",
+    "createdAt": "2026-09-15T02:01:35.005Z",
+    "updatedAt": "2026-09-15T02:01:35.005Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    },
+    "parentSessionId": "session_1789437694990_mag9z"
+  },
+  {
+    "id": "session_1789488556173_7qskm",
+    "title": "HTTP Chat",
+    "createdAt": "2026-09-15T16:09:16.173Z",
+    "updatedAt": "2026-09-15T16:09:18.733Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "id": "msg_1789488556179_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Calculate 12 * 12"
+          }
+        ],
+        "timestamp": "2026-09-15T16:09:16.179Z",
+        "turnNumber": 1,
+        "tokenEstimate": 5
+      },
+      {
+        "id": "msg_1789488557515_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "12 multiplied by 12 is 144.\n"
+          }
+        ],
+        "timestamp": "2026-09-15T16:09:17.515Z",
+        "turnNumber": 1,
+        "toolCalls": [
+          {
+            "id": "tool_1789488556953_xhqm",
+            "name": "calculate",
+            "args": {
+              "expression": "12 * 12"
+            },
+            "timestamp": "2026-09-15T16:09:16.953Z",
+            "result": {
+              "expression": "12 * 12",
+              "result": 144,
+              "success": true
+            },
+            "durationMs": 0
+          }
+        ],
+        "tokenEstimate": 7
+      },
+      {
+        "id": "msg_1789488557527_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Add todo: Write documentation"
+          }
+        ],
+        "timestamp": "2026-09-15T16:09:17.527Z",
+        "turnNumber": 2,
+        "tokenEstimate": 8
+      },
+      {
+        "id": "msg_1789488558733_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "I've added \"Write documentation\" to your to-do list."
+          }
+        ],
+        "timestamp": "2026-09-15T16:09:18.733Z",
+        "turnNumber": 2,
+        "toolCalls": [
+          {
+            "id": "tool_1789488558238_y258",
+            "name": "manage_todos",
+            "args": {
+              "task": "Write documentation",
+              "action": "add"
+            },
+            "timestamp": "2026-09-15T16:09:18.238Z",
+            "result": {
+              "success": true,
+              "action": "add",
+              "todo": {
+                "id": "todo_1789488558238_woyu",
+                "task": "Write documentation",
+                "completed": false,
+                "createdAt": "2026-09-15T16:09:18.238Z"
+              },
+              "total": 1
+            },
+            "durationMs": 0
+          }
+        ],
+        "tokenEstimate": 13
+      }
+    ],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": [
+        {
+          "id": "todo_1789488558238_woyu",
+          "task": "Write documentation",
+          "completed": false,
+          "createdAt": "2026-09-15T16:09:18.238Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "session_1789488558753_2r7c0",
+    "title": "Fork Source",
+    "createdAt": "2026-09-15T16:09:18.753Z",
+    "updatedAt": "2026-09-15T16:09:18.753Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_fork_1789488558769_cbnh",
+    "title": "Fork of Fork Source (Turn 0)",
+    "createdAt": "2026-09-15T16:09:18.769Z",
+    "updatedAt": "2026-09-15T16:09:18.769Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    },
+    "parentSessionId": "session_1789488558753_2r7c0"
+  },
+  {
+    "id": "session_1789488922171_qshde",
+    "title": "HTTP Chat",
+    "createdAt": "2026-09-15T16:15:22.171Z",
+    "updatedAt": "2026-09-15T16:15:24.694Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "id": "msg_1789488922182_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Calculate 12 * 12"
+          }
+        ],
+        "timestamp": "2026-09-15T16:15:22.182Z",
+        "turnNumber": 1,
+        "tokenEstimate": 5
+      },
+      {
+        "id": "msg_1789488923469_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "The result of 12 * 12 is 144.\n"
+          }
+        ],
+        "timestamp": "2026-09-15T16:15:23.469Z",
+        "turnNumber": 1,
+        "toolCalls": [
+          {
+            "id": "tool_1789488922971_q8ae",
+            "name": "calculate",
+            "args": {},
+            "result": {
+              "expression": "12 * 12",
+              "result": 144,
+              "success": true
+            },
+            "durationMs": 15,
+            "timestamp": "2026-09-15T16:15:22.971Z"
+          }
+        ],
+        "tokenEstimate": 8
+      },
+      {
+        "id": "msg_1789488923472_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Add todo: Write documentation"
+          }
+        ],
+        "timestamp": "2026-09-15T16:15:23.472Z",
+        "turnNumber": 2,
+        "tokenEstimate": 8
+      },
+      {
+        "id": "msg_1789488924694_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "OK. I've added \"Write documentation\" to your to-do list."
+          }
+        ],
+        "timestamp": "2026-09-15T16:15:24.694Z",
+        "turnNumber": 2,
+        "toolCalls": [
+          {
+            "id": "tool_1789488924201_yje2",
+            "name": "manage_todos",
+            "args": {},
+            "result": {
+              "success": true,
+              "action": "add",
+              "todo": {
+                "id": "todo_1789488924201_90nz",
+                "task": "Write documentation",
+                "completed": false,
+                "createdAt": "2026-09-15T16:15:24.201Z"
+              },
+              "total": 1
+            },
+            "durationMs": 15,
+            "timestamp": "2026-09-15T16:15:24.201Z"
+          }
+        ],
+        "tokenEstimate": 14
+      }
+    ],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": [
+        {
+          "id": "todo_1789488924201_90nz",
+          "task": "Write documentation",
+          "completed": false,
+          "createdAt": "2026-09-15T16:15:24.201Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "session_1789488924728_hi19s",
+    "title": "Fork Source",
+    "createdAt": "2026-09-15T16:15:24.728Z",
+    "updatedAt": "2026-09-15T16:15:24.728Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_fork_1789488924744_zqm0",
+    "title": "Fork of Fork Source (Turn 0)",
+    "createdAt": "2026-09-15T16:15:24.744Z",
+    "updatedAt": "2026-09-15T16:15:24.744Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    },
+    "parentSessionId": "session_1789488924728_hi19s"
+  },
+  {
+    "id": "session_1789488972995_ba6j4",
+    "title": "HTTP Chat",
+    "createdAt": "2026-09-15T16:16:12.995Z",
+    "updatedAt": "2026-09-15T16:16:15.670Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "id": "msg_1789488973012_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Calculate 12 * 12"
+          }
+        ],
+        "timestamp": "2026-09-15T16:16:13.012Z",
+        "turnNumber": 1,
+        "tokenEstimate": 5
+      },
+      {
+        "id": "msg_1789488974365_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "12 multiplied by 12 is 144.\n"
+          }
+        ],
+        "timestamp": "2026-09-15T16:16:14.365Z",
+        "turnNumber": 1,
+        "toolCalls": [
+          {
+            "id": "tool_1789488973825_ru3u",
+            "name": "calculate",
+            "args": {},
+            "result": {
+              "expression": "12 * 12",
+              "result": 144,
+              "success": true
+            },
+            "durationMs": 15,
+            "timestamp": "2026-09-15T16:16:13.825Z"
+          }
+        ],
+        "tokenEstimate": 7
+      },
+      {
+        "id": "msg_1789488974370_u",
+        "role": "user",
+        "parts": [
+          {
+            "text": "Add todo: Write documentation"
+          }
+        ],
+        "timestamp": "2026-09-15T16:16:14.370Z",
+        "turnNumber": 2,
+        "tokenEstimate": 8
+      },
+      {
+        "id": "msg_1789488975670_m",
+        "role": "model",
+        "parts": [
+          {
+            "text": "I've added \"Write documentation\" to your todo list. Do you need help with anything else?"
+          }
+        ],
+        "timestamp": "2026-09-15T16:16:15.670Z",
+        "turnNumber": 2,
+        "toolCalls": [
+          {
+            "id": "tool_1789488975155_jr6o",
+            "name": "manage_todos",
+            "args": {},
+            "result": {
+              "success": true,
+              "action": "add",
+              "todo": {
+                "id": "todo_1789488975154_tf9o",
+                "task": "Write documentation",
+                "completed": false,
+                "createdAt": "2026-09-15T16:16:15.154Z"
+              },
+              "total": 1
+            },
+            "durationMs": 15,
+            "timestamp": "2026-09-15T16:16:15.155Z"
+          }
+        ],
+        "tokenEstimate": 22
+      }
+    ],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": [
+        {
+          "id": "todo_1789488975154_tf9o",
+          "task": "Write documentation",
+          "completed": false,
+          "createdAt": "2026-09-15T16:16:15.154Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "session_1789488975703_zt3yp",
+    "title": "Fork Source",
+    "createdAt": "2026-09-15T16:16:15.703Z",
+    "updatedAt": "2026-09-15T16:16:15.703Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    }
+  },
+  {
+    "id": "session_fork_1789488975719_6rec",
+    "title": "Fork of Fork Source (Turn 0)",
+    "createdAt": "2026-09-15T16:16:15.719Z",
+    "updatedAt": "2026-09-15T16:16:15.719Z",
+    "model": "gemini-2.5-flash",
+    "systemInstruction": "You are Nexus, an advanced multi-turn conversational AI assistant with memory, multi-step reasoning, and dynamic tool execution. Maintain clear conversational context across turns. If the user asks you to remember or look up facts, calculate expressions, or manage tasks, execute the appropriate tools.",
+    "temperature": 0.7,
+    "messages": [],
+    "memory": {
+      "facts": {},
+      "notes": [],
+      "todos": []
+    },
+    "parentSessionId": "session_1789488975703_zt3yp"
+  }
+]

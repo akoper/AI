@@ -1,0 +1,42 @@
+{
+  "name": "live-voice-agent",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Real-time live voice understanding agent built with TypeScript and Google ADK / Gen AI SDK",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx src/server.ts",
+    "cli": "tsx src/cli.ts",
+    "test": "tsx tests/agent.test.ts"
+  },
+  "keywords": [
+    "gemini",
+    "live-voice",
+    "voice-agent",
+    "google-adk",
+    "google-genai",
+    "speech-understanding",
+    "typescript",
+    "multimodal-live"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "latest",
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.2",
+    "@types/ws": "^8.5.13",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

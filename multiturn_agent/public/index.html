@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus — Google ADK Multi-Turn Agent</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <span class="logo-icon">🤖</span>
+          <div class="logo-text">
+            <h2>Nexus ADK</h2>
+            <span class="badge">Multi-Turn</span>
+          </div>
+        </div>
+        <button id="btnNewChat" class="btn btn-primary btn-new-chat">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          New Chat
+        </button>
+      </div>
+
+      <div class="sessions-section">
+        <div class="section-label">Conversations</div>
+        <div id="sessionList" class="session-list">
+          <!-- Session items loaded dynamically -->
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="status-card">
+          <div class="status-indicator online"></div>
+          <div class="status-details">
+            <span id="agentModelBadge" class="status-model">gemini-2.5-flash</span>
+            <span id="agentStatusText" class="status-text">Connected</span>
+          </div>
+        </div>
+        <button id="btnOpenSettings" class="btn btn-icon" title="Agent Settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Chat Content -->
+    <main class="chat-main">
+      <header class="chat-header">
+        <div class="chat-title-container">
+          <h1 id="currentSessionTitle">New Multi-turn Chat</h1>
+          <div class="chat-meta">
+            <span id="turnCounter" class="badge badge-subtle">0 turns</span>
+            <span id="forkInfo" class="badge badge-fork hidden">Forked</span>
+          </div>
+        </div>
+        <div class="chat-actions">
+          <button id="btnForkSession" class="btn btn-secondary btn-sm" title="Fork conversation at this point">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+            Fork Branch
+          </button>
+          <button id="btnExportSession" class="btn btn-secondary btn-sm" title="Export conversation JSON">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Export
+          </button>
+          <button id="btnClearHistory" class="btn btn-secondary btn-sm" title="Clear conversation history">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            Clear
+          </button>
+        </div>
+      </header>
+
+      <!-- Message History Container -->
+      <div id="messagesContainer" class="messages-container">
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">💬</div>
+          <h3>Google ADK Multi-Turn Conversational Agent</h3>
+          <p>This agent maintains context, remembers details across turns, executes tools dynamically, and supports branching conversation paths.</p>
+          <div class="suggestion-grid">
+            <button class="suggestion-btn" data-text="Remember that my name is Alice and I am building an AI agent.">
+              🧠 "Remember my name is Alice..."
+            </button>
+            <button class="suggestion-btn" data-text="What is my name and what am I building?">
+              🔍 "What is my name?" (Memory recall)
+            </button>
+            <button class="suggestion-btn" data-text="Calculate 18% tip on a $124.50 bill and add 5% tax.">
+              🧮 "Calculate 18% tip on $124.50"
+            </button>
+            <button class="suggestion-btn" data-text="Add a todo item: Research Google ADK multi-turn patterns">
+              📋 "Add todo: Research Google ADK"
+            </button>
+            <button class="suggestion-btn" data-text="What is the current time in Tokyo, London, and New York?">
+              🕒 "What is the time in Tokyo?"
+            </button>
+            <button class="suggestion-btn" data-text="Search knowledge base for Google ADK features.">
+              🌐 "Search knowledge base for ADK"
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Tool Call Floating Indicator -->
+      <div id="toolExecutionStatus" class="tool-status-bar hidden">
+        <div class="spinner"></div>
+        <span id="toolStatusText">Executing agent tool...</span>
+      </div>
+
+      <!-- Input Bar -->
+      <div class="chat-input-wrapper">
+        <div class="quick-pills">
+          <button class="pill" data-text="What do you remember from our conversation?">🧠 Recall Memory</button>
+          <button class="pill" data-text="List all my tasks in my todo list.">📋 List Todos</button>
+          <button class="pill" data-text="What is the current time?">🕒 Current Time</button>
+          <button class="pill" data-text="Calculate 2^10 + 450">🧮 Math Calc</button>
+        </div>
+        <form id="chatForm" class="chat-input-form">
+          <textarea
+            id="chatInput"
+            placeholder="Type your message across multiple conversation turns... (Enter to send, Shift+Enter for newline)"
+            rows="1"
+            autofocus
+          ></textarea>
+          <button type="submit" id="btnSend" class="btn btn-primary btn-send" title="Send message">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Session Settings</h3>
+        <button id="btnCloseSettings" class="btn btn-icon">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="settingModel">Gemini Model</label>
+          <select id="settingModel" class="form-control">
+            <option value="gemini-2.5-flash">Gemini 2.5 Flash (Recommended)</option>
+            <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+            <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+            <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+            <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="settingTemp">Temperature: <span id="tempValue">0.7</span></label>
+          <input type="range" id="settingTemp" min="0" max="1" step="0.05" value="0.7">
+        </div>
+        <div class="form-group">
+          <label for="settingSystem">System Instruction</label>
+          <textarea id="settingSystem" class="form-control" rows="4"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnSaveSettings" class="btn btn-primary">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
