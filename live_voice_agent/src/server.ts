@@ -46,6 +46,7 @@ wss.on('connection', (ws: WebSocket, req) => {
 app.get('/api/status', (_req: Request, res: Response) => {
   res.json({
     status: 'ok',
+    framework: 'Google ADK (@google/adk)',
     agentName: config.agentName,
     hasApiKey: Boolean(config.apiKey),
     model: config.modelName,

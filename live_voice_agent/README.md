@@ -1,6 +1,6 @@
 # 🎙️ Live Voice Agent
 
-A real-time, live voice understanding agent built with **TypeScript**, **Google ADK (Agent Development Kit / Google Gen AI SDK)**, and **Gemini 2.5 Flash**.
+A real-time, live voice understanding agent built with **TypeScript**, **Google ADK (`@google/adk`)**, and **Gemini 2.5 Flash**.
 
 The agent listens to live streaming microphone audio, detects speech activity in real time, understands user speech, performs semantic intent recognition, calls integrated tools, and responds both visually and with voice synthesis (TTS).
 
@@ -12,8 +12,8 @@ The agent listens to live streaming microphone audio, detects speech activity in
   - Continuous PCM / WAV audio streaming over WebSocket (`ws://localhost:3003/ws/live`).
   - Voice Activity Detection (VAD) with energy thresholding and automatic silence finalization.
   - Multi-sample rate support with 16kHz speech recognition optimization.
-- **Google ADK & Gemini Multimodal Understanding**:
-  - Uses `@google/genai` and `@google/generative-ai` with Gemini 2.5 Flash / 2.0 Flash models.
+- **Google ADK (`@google/adk`) Agent Execution**:
+  - Uses official Google Agent Development Kit (`@google/adk`) with `Agent`, `FunctionTool`, and `InMemoryRunner`.
   - Real-time speech-to-intent understanding, context memory, and spoken answer formatting.
 - **Built-in Voice Tools (Agent Actions)**:
   - 🕒 `get_current_time`: Timezone-aware live time and date reporting.
@@ -43,7 +43,7 @@ live_voice_agent/
 ├── src/
 │   ├── config.ts         # Environment & app configuration
 │   ├── types.ts          # TypeScript interfaces for WebSocket, intents, tools, & messages
-│   ├── google-adk.ts     # Google Gen AI SDK / ADK agent integration & Multimodal live understanding
+│   ├── google-adk.ts     # Google ADK (@google/adk) Agent & InMemoryRunner integration
 │   ├── voice-processor.ts# Audio chunking, PCM/WAV conversion, VAD energy calculation
 │   ├── tools.ts          # Agent voice tools registry & execution handlers
 │   ├── live-session.ts   # Live WebSocket streaming session management & speech chunker

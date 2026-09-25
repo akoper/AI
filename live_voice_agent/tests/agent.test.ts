@@ -1,5 +1,5 @@
 import { VoiceProcessor } from '../src/voice-processor.js';
-import { tools, executeTool, getAllVoiceNotes } from '../src/tools.js';
+import { tools, executeTool, getAllVoiceNotes, getAdkVoiceTools } from '../src/tools.js';
 import { googleAdkAgent } from '../src/google-adk.js';
 import { config } from '../src/config.js';
 
@@ -78,8 +78,35 @@ async function runTests() {
   // Test Suite 3: Google ADK Agent Integration
   console.log('\n3. Google ADK Agent & Intent Understanding');
   {
+    // Test 3.1: ADK FunctionTools creation
+    const adkTools = getAdkVoiceTools();
+    assert(adkTools.length === 6, `getAdkVoiceTools returns 6 Google ADK FunctionTools (got ${adkTools.length})`);
+    assert(adkTools.every((t) => typeof t.name === 'string' && typeof t.description === 'string'), 'All ADK tools have valid names and descriptions');
+
+    // Test 3.2: Google ADK Agent instance creation
+    const adkAgentInstance = googleAdkAgent.createAdkAgent();
+    assert(Boolean(adkAgentInstance) && adkAgentInstance.name === config.agentName, 'createAdkAgent creates Google ADK Agent instance');
+
+    // Test 3.3: System instruction formatting
     const instruction = googleAdkAgent.getSystemInstruction();
     assert(instruction.includes(config.agentName), 'Agent system instruction includes agent persona and name');
+
+    // Test 3.4: Voice query response (simulated or live)
+    const voiceRes = await googleAdkAgent.respondToVoiceInput('Calculate 50 * 20');
+    assert(
+      Boolean(voiceRes.reply) &&
+        (voiceRes.reply.includes('1000') ||
+          voiceRes.reply.includes('1,000') ||
+          voiceRes.toolExecution?.output?.result === 1000),
+      'Agent processes calculation voice command'
+    );
+    assert(voiceRes.intent.intent === 'tool_call', 'Agent recognizes tool_call intent');
+
+    // Test 3.5: Voice Audio processing
+    const toneBuffer = VoiceProcessor.generateTestTone(440, 500, 16000);
+    const toneWav = VoiceProcessor.pcmToWav(toneBuffer, 16000);
+    const audioRes = await googleAdkAgent.processLiveAudio(toneWav.toString('base64'), 'audio/wav');
+    assert(Boolean(audioRes.reply), 'processLiveAudio processes voice audio and generates response');
 
     if (config.apiKey) {
       console.log('   (Running live Gemini API query test with configured API key...)');

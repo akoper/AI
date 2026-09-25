@@ -1,3 +1,5 @@
+import { FunctionTool } from '@google/adk';
+import { z } from 'zod';
 import { ToolDefinition } from './types.js';
 
 interface VoiceNote {
@@ -230,4 +232,92 @@ export async function executeTool(name: string, args: Record<string, any>) {
 
 export function getAllVoiceNotes() {
   return voiceNotes;
+}
+
+/**
+ * Constructs Google ADK FunctionTool instances for live voice agent tools
+ */
+export function getAdkVoiceTools(): FunctionTool<any>[] {
+  const timeTool = new FunctionTool({
+    name: 'get_current_time',
+    description: 'Get the current local date, time, and timezone information.',
+    parameters: z.object({
+      timezone: z
+        .string()
+        .optional()
+        .describe(
+          'Optional IANA timezone name (e.g., "America/New_York", "Europe/London", "UTC"). Defaults to local system time.'
+        ),
+    }),
+    execute: async ({ timezone }: { timezone?: string }) => {
+      return executeTool('get_current_time', { timezone });
+    },
+  } as any);
+
+  const weatherTool = new FunctionTool({
+    name: 'get_weather',
+    description: 'Get current weather conditions and forecast for a given location or city.',
+    parameters: z.object({
+      location: z.string().describe('City or location name (e.g., "San Francisco", "Tokyo", "London").'),
+      unit: z
+        .enum(['celsius', 'fahrenheit'])
+        .optional()
+        .describe('Temperature unit: "celsius" or "fahrenheit". Default is celsius.'),
+    }),
+    execute: async ({ location, unit }: { location: string; unit?: string }) => {
+      return executeTool('get_weather', { location, unit });
+    },
+  } as any);
+
+  const calculateTool = new FunctionTool({
+    name: 'calculate',
+    description: 'Perform mathematical calculations, arithmetic, or unit conversions.',
+    parameters: z.object({
+      expression: z
+        .string()
+        .describe('The math expression to evaluate (e.g., "25 * 4 + 10", "sqrt(144)", "15% of 85").'),
+    }),
+    execute: async ({ expression }: { expression: string }) => {
+      return executeTool('calculate', { expression });
+    },
+  } as any);
+
+  const saveNoteTool = new FunctionTool({
+    name: 'save_voice_note',
+    description: 'Save a dictated voice note, thought, or memo into memory.',
+    parameters: z.object({
+      text: z.string().describe('The content of the voice note to record.'),
+      tags: z.string().optional().describe('Optional comma-separated tags (e.g., "work, idea, urgent").'),
+    }),
+    execute: async ({ text, tags }: { text: string; tags?: string }) => {
+      return executeTool('save_voice_note', { text, tags });
+    },
+  } as any);
+
+  const listNotesTool = new FunctionTool({
+    name: 'list_voice_notes',
+    description: 'Retrieve or list all previously saved voice notes.',
+    parameters: z.object({
+      limit: z.number().optional().describe('Maximum number of notes to retrieve. Defaults to 5.'),
+    }),
+    execute: async ({ limit }: { limit?: number }) => {
+      return executeTool('list_voice_notes', { limit });
+    },
+  } as any);
+
+  const setReminderTool = new FunctionTool({
+    name: 'set_reminder',
+    description: 'Set a voice reminder or timer for the user.',
+    parameters: z.object({
+      reminder: z.string().describe('What the user needs to be reminded of.'),
+      timeOrDuration: z
+        .string()
+        .describe('When to remind (e.g., "in 10 minutes", "at 3:00 PM", "tomorrow morning").'),
+    }),
+    execute: async ({ reminder, timeOrDuration }: { reminder: string; timeOrDuration: string }) => {
+      return executeTool('set_reminder', { reminder, timeOrDuration });
+    },
+  } as any);
+
+  return [timeTool, weatherTool, calculateTool, saveNoteTool, listNotesTool, setReminderTool];
 }

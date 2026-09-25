@@ -2,7 +2,7 @@
   "name": "live-voice-agent",
   "version": "1.0.0",
   "type": "module",
-  "description": "Real-time live voice understanding agent built with TypeScript and Google ADK / Gen AI SDK",
+  "description": "Real-time live voice understanding agent built with TypeScript and Google ADK (Agent Development Kit)",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
@@ -16,7 +16,7 @@
     "live-voice",
     "voice-agent",
     "google-adk",
-    "google-genai",
+    "agent-development-kit",
     "speech-understanding",
     "typescript",
     "multimodal-live"
@@ -24,12 +24,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google/genai": "latest",
-    "@google/generative-ai": "^0.24.1",
+    "@google/adk": "^2.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
