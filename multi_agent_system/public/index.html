@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Gemini Multi-Agent System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo-badge">🤖 ♊</div>
+        <div>
+          <h1>Gemini Multi-Agent System</h1>
+          <p class="subtitle">Distributed Agent Orchestration with Google Gemini & Google ADK</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="status-indicator" id="connectionStatus">
+          <span class="status-dot online"></span>
+          <span id="statusText">System Ready</span>
+        </div>
+        <div class="model-badge" id="modelBadge">gemini-2.5-flash</div>
+      </div>
+    </header>
+
+    <!-- Main Grid -->
+    <main class="main-grid">
+      <!-- Left Column: Controls & Agent Topology -->
+      <section class="left-panel">
+        <!-- Task Input Card -->
+        <div class="card task-card">
+          <h2 class="card-title">🚀 Dispatch Multi-Agent Mission</h2>
+          <div class="form-group">
+            <label for="taskInput">Objective / Task Prompt</label>
+            <textarea id="taskInput" rows="3" placeholder="e.g. Design and evaluate a high-throughput multi-agent pipeline with caching and fault-tolerance"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="workflowSelect">Orchestration Workflow</label>
+            <select id="workflowSelect">
+              <option value="supervisor">Supervisor / Hierarchical (Recommended)</option>
+              <option value="pipeline">Sequential Pipeline</option>
+              <option value="debate">Multi-Agent Debate & Consensus</option>
+              <option value="handoff">Autonomous Dynamic Handoff</option>
+            </select>
+          </div>
+
+          <div class="quick-tasks">
+            <span class="quick-label">Sample Missions:</span>
+            <button class="quick-btn" data-task="Design a resilient distributed rate limiter with sliding window Redis architecture.">Rate Limiter</button>
+            <button class="quick-btn" data-task="Research Gemini 2.5 multi-agent coordination paradigms and write technical guidelines.">Gemini ADK</button>
+            <button class="quick-btn" data-task="Perform quantitative analysis and statistical validation on high-volume financial data streams.">Financial Stats</button>
+          </div>
+
+          <button id="runBtn" class="primary-btn">
+            <span class="btn-icon">⚡</span> Execute Multi-Agent System
+          </button>
+        </div>
+
+        <!-- Agent Topology Panel -->
+        <div class="card">
+          <h2 class="card-title">👥 Active Specialist Agents</h2>
+          <div class="agents-grid" id="agentsGrid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Shared Artifacts Explorer -->
+        <div class="card">
+          <h2 class="card-title">📦 Shared Blackboard Artifacts</h2>
+          <div id="artifactsList" class="artifacts-list">
+            <div class="empty-state">No artifacts generated yet. Run a mission to produce artifacts.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Live Stream, Subtasks & Output -->
+      <section class="right-panel">
+        <!-- Execution Progress & Subtasks -->
+        <div class="card">
+          <div class="card-header-flex">
+            <h2 class="card-title">📋 Subtasks & Execution Graph</h2>
+            <div id="taskMetrics" class="task-metrics"></div>
+          </div>
+          <div id="subtasksTimeline" class="subtasks-timeline">
+            <div class="empty-state">Waiting for task execution...</div>
+          </div>
+        </div>
+
+        <!-- Live Agent Communication & Thought Stream -->
+        <div class="card live-stream-card">
+          <div class="card-header-flex">
+            <h2 class="card-title">📡 Live Multi-Agent Communication & Reasoning Stream</h2>
+            <button id="clearStreamBtn" class="text-btn">Clear Log</button>
+          </div>
+          <div id="streamFeed" class="stream-feed">
+            <div class="stream-placeholder">
+              <span>Ready for mission dispatch. Submit a prompt to observe agent reasoning, tool calls, and handoffs in real-time.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final Coordinated Deliverable -->
+        <div class="card deliverable-card" id="deliverableCard" style="display: none;">
+          <h2 class="card-title">🎯 Synthesized Deliverable</h2>
+          <div id="finalOutputContent" class="markdown-body"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Artifact Modal -->
+    <div id="artifactModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalTitle">Artifact Viewer</h3>
+          <button id="closeModalBtn" class="close-btn">&times;</button>
+        </div>
+        <pre id="modalBody" class="modal-body"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
