@@ -91,6 +91,64 @@ Rules:
 5. Accurately distinguish Bill of Lading, Commercial Invoice, Freight Invoice, and Packing List.
 `;
 
+const DEFAULT_MODEL = "gemini-2.5-flash";
+const FALLBACK_MODELS = [
+  "gemini-2.5-flash",
+  "gemini-2.0-flash",
+  "gemini-1.5-flash-latest",
+  "gemini-1.5-flash",
+  "gemini-1.5-pro",
+];
+
+async function callGeminiWithModelFallback(
+  genAI: GoogleGenerativeAI,
+  candidateModels: string[],
+  contents: any[],
+  stageName: string
+): Promise<{ text: string; modelUsed: string }> {
+  let lastError: any = null;
+
+  for (const model of candidateModels) {
+    try {
+      logger.step(stageName, `Attempting Google Gemini call with model: ${model}...`);
+      const generativeModel = genAI.getGenerativeModel({
+        model,
+        generationConfig: {
+          temperature: 0.1,
+          responseMimeType: "application/json",
+        },
+      });
+
+      const startTime = Date.now();
+      const response = await generativeModel.generateContent(contents);
+      const durationMs = Date.now() - startTime;
+      logger.success("GEMINI_RESPONSE", `Received response from Gemini (${model}) in ${(durationMs / 1000).toFixed(2)}s`);
+
+      const text = response.response.text();
+      return { text, modelUsed: model };
+    } catch (err: any) {
+      lastError = err;
+      const isModelUnavailable =
+        err.message?.includes("404") ||
+        err.message?.includes("not found") ||
+        err.message?.includes("not supported for generateContent") ||
+        err.status === 404;
+
+      if (isModelUnavailable) {
+        logger.warn(
+          "MODEL_UNAVAILABLE",
+          `Model "${model}" not found or unsupported for API endpoint (${err.message}). Trying next candidate...`
+        );
+        continue;
+      }
+
+      logger.warn("MODEL_CALL_WARN", `Call with model "${model}" failed: ${err.message}. Trying next candidate...`);
+    }
+  }
+
+  throw lastError || new Error("All candidate Gemini models failed to generate content.");
+}
+
 export async function extractDocumentWithGemini(
   pdfBuffer: Buffer,
   fileName: string,
@@ -108,19 +166,13 @@ export async function extractDocumentWithGemini(
     };
   }
 
-  const modelName = process.env.GEMINI_MODEL || "gemini-1.5-flash";
-  logger.info("GEMINI_INIT", `Initializing GoogleGenerativeAI with model: ${modelName}`);
+  const requestedModel = process.env.GEMINI_MODEL || DEFAULT_MODEL;
+  const candidateModels = Array.from(new Set([requestedModel, ...FALLBACK_MODELS]));
+  logger.info("GEMINI_INIT", `Target model: ${requestedModel} (Fallback candidates: ${candidateModels.join(", ")})`);
+
+  const genAI = new GoogleGenerativeAI(apiKey);
 
   try {
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({
-      model: modelName,
-      generationConfig: {
-        temperature: 0.1,
-        responseMimeType: "application/json",
-      },
-    });
-
     const base64Data = pdfBuffer.toString("base64");
     logger.step("GEMINI_PAYLOAD", `Prepared base64 PDF inline data payload (${(base64Data.length / 1024).toFixed(1)} KB encoded)`);
 
@@ -133,13 +185,13 @@ export async function extractDocumentWithGemini(
 
     const prompt = `${SYSTEM_PROMPT}\n\nDocument File Name: ${fileName}\nPlease extract all data from this PDF file.`;
 
-    logger.step("GEMINI_CALL", `Sending multimodal prompt to Google Gemini (${modelName})...`);
-    const startTime = Date.now();
-    const response = await model.generateContent([prompt, part]);
-    const durationMs = Date.now() - startTime;
-    logger.success("GEMINI_RESPONSE", `Received response from Gemini in ${(durationMs / 1000).toFixed(2)}s`);
+    const { text: responseText, modelUsed } = await callGeminiWithModelFallback(
+      genAI,
+      candidateModels,
+      [prompt, part],
+      "GEMINI_CALL"
+    );
 
-    const responseText = response.response.text();
     const cleaned = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
 
     logger.step("PARSING", "Parsing structured JSON response from Gemini");
@@ -151,7 +203,7 @@ export async function extractDocumentWithGemini(
     const lineItemCount = Array.isArray(parsedData.line_items) ? parsedData.line_items.length : 0;
     const containerCount = Array.isArray(parsedData.containers) ? parsedData.containers.length : 0;
 
-    logger.success("EXTRACTION_OK", `Extracted ${docType} #${docNumber}`, {
+    logger.success("EXTRACTION_OK", `Extracted ${docType} #${docNumber} using ${modelUsed}`, {
       document_type: docType,
       document_number: docNumber,
       shipper: parsedData.shipper_name || "N/A",
@@ -160,6 +212,7 @@ export async function extractDocumentWithGemini(
       line_items_count: lineItemCount,
       containers_count: containerCount,
       confidence_score: parsedData.confidence_score,
+      model_used: modelUsed,
     });
 
     return {
@@ -176,7 +229,7 @@ export async function extractDocumentWithGemini(
   } catch (error: any) {
     logger.warn("FALLBACK_MODE", `Primary multimodal inline extraction failed: ${error.message}. Attempting text fallback...`);
     try {
-      return await fallbackTextExtraction(pdfBuffer, fileName, apiKey, modelName, error.message);
+      return await fallbackTextExtraction(pdfBuffer, fileName, genAI, candidateModels, error.message);
     } catch (fallbackError: any) {
       logger.error("EXTRACTION_FAIL", `Document extraction failed completely`, {
         primaryError: error.message,
@@ -193,43 +246,66 @@ export async function extractDocumentWithGemini(
 async function fallbackTextExtraction(
   pdfBuffer: Buffer,
   fileName: string,
-  apiKey: string,
-  modelName: string,
+  genAI: GoogleGenerativeAI,
+  candidateModels: string[],
   originalError: string
 ): Promise<ExtractionResult> {
-  logger.step("TEXT_PARSER", "Extracting raw text from PDF buffer using pdf-parse");
-  const pdfParse = (await import("pdf-parse")).default;
-  const parsedPdf = await pdfParse(pdfBuffer);
-  const textContent = parsedPdf.text;
+  logger.step("TEXT_PARSER", "Attempting text extraction from PDF buffer");
+  let textContent = "";
 
-  logger.info("TEXT_PARSER", `Extracted ${textContent ? textContent.length : 0} characters of text from PDF`);
-
-  if (!textContent || textContent.trim().length === 0) {
-    throw new Error(`PDF contained no extractable text and visual extraction failed: ${originalError}`);
+  try {
+    const pdfParse = (await import("pdf-parse")).default;
+    const parsedPdf = await pdfParse(pdfBuffer);
+    if (parsedPdf && parsedPdf.text && parsedPdf.text.trim().length > 0) {
+      textContent = parsedPdf.text.trim();
+    }
+  } catch (pdfParseError: any) {
+    logger.warn("PDF_PARSE_WARN", `pdf-parse failed (${pdfParseError.message || pdfParseError}). Trying raw stream extraction...`);
   }
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({
-    model: modelName,
-    generationConfig: {
-      temperature: 0.1,
-      responseMimeType: "application/json",
-    },
-  });
+  if (!textContent) {
+    try {
+      const bufferStr = pdfBuffer.toString("latin1");
+      const textMatches: string[] = [];
+      const streamRegex = /BT[\s\S]*?ET/g;
+      let match;
+      while ((match = streamRegex.exec(bufferStr)) !== null) {
+        const block = match[0];
+        const stringRegex = /\((.*?)\)|\[(.*?)\]/g;
+        let strMatch;
+        while ((strMatch = stringRegex.exec(block)) !== null) {
+          const text = strMatch[1] || strMatch[2];
+          if (text && text.trim().length > 0) {
+            textMatches.push(text.trim());
+          }
+        }
+      }
+      if (textMatches.length > 0) {
+        textContent = textMatches.join(" ");
+      }
+    } catch (rawErr: any) {
+      logger.warn("RAW_EXTRACT_WARN", `Raw buffer extraction failed: ${rawErr.message}`);
+    }
+  }
+
+  if (!textContent || textContent.trim().length === 0) {
+    throw new Error(`PDF contained no extractable text stream and visual multimodal extraction failed (${originalError})`);
+  }
+
+  logger.info("TEXT_PARSER", `Extracted ${textContent.length} characters of text from PDF`);
 
   const prompt = `${SYSTEM_PROMPT}\n\nDocument File Name: ${fileName}\n\nDocument Text Content:\n${textContent}`;
-  logger.step("GEMINI_FALLBACK", `Sending text prompt (${textContent.length} chars) to Gemini...`);
-  
-  const startTime = Date.now();
-  const response = await model.generateContent(prompt);
-  const durationMs = Date.now() - startTime;
-  logger.success("GEMINI_FALLBACK", `Received fallback response from Gemini in ${(durationMs / 1000).toFixed(2)}s`);
+  const { text: responseText, modelUsed } = await callGeminiWithModelFallback(
+    genAI,
+    candidateModels,
+    [prompt],
+    "GEMINI_FALLBACK"
+  );
 
-  const responseText = response.response.text();
   const cleaned = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
   const parsedData = JSON.parse(cleaned);
 
-  logger.success("EXTRACTION_OK", `Fallback extracted ${parsedData.document_type || "UNKNOWN"} #${parsedData.document_number || "N/A"}`);
+  logger.success("EXTRACTION_OK", `Fallback extracted ${parsedData.document_type || "UNKNOWN"} #${parsedData.document_number || "N/A"} using ${modelUsed}`);
 
   return {
     success: true,

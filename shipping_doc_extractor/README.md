@@ -42,7 +42,7 @@ cp .env.example .env.local
 Inside `.env.local`:
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-1.5-flash
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
 *(You can also provide a Gemini API Key directly in the web UI at runtime)*
@@ -58,6 +58,23 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ```bash
 npm run build
 npm start
+```
+
+---
+
+## Google Cloud Deployment (Cloud Run)
+
+To deploy the container to Google Cloud Run, see the complete guide in [DEPLOYMENT.md](DEPLOYMENT.md) or run:
+
+### Windows (PowerShell):
+```powershell
+.\deploy-gcp.ps1 -ProjectId "YOUR_GCP_PROJECT_ID" -Region "us-central1" -GeminiApiKey "YOUR_GEMINI_API_KEY"
+```
+
+### Linux / macOS (Bash):
+```bash
+chmod +x deploy-gcp.sh
+GOOGLE_CLOUD_PROJECT="YOUR_GCP_PROJECT_ID" ./deploy-gcp.sh
 ```
 
 ---

@@ -39,7 +39,7 @@ export default function RootLayout({
             </div>
             <div className="flex items-center gap-4 text-xs font-medium text-slate-600">
               <span className="px-2.5 py-1 bg-sky-50 text-sky-700 border border-sky-200 rounded">
-                Gemini 1.5/2.0 Flash
+                Gemini 2.5 Flash
               </span>
               <span className="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded">
                 SQLite Database Active

@@ -15,13 +15,52 @@ if (!fs.existsSync(DB_DIR)) {
   fs.mkdirSync(DB_DIR, { recursive: true });
 }
 
+function findWasmPath(): string | null {
+  const candidatePaths = [
+    path.join(process.cwd(), "node_modules", "sql.js", "dist", "sql-wasm.wasm"),
+    path.join(process.cwd(), ".next", "standalone", "node_modules", "sql.js", "dist", "sql-wasm.wasm"),
+    path.join(process.cwd(), "public", "sql-wasm.wasm"),
+    path.join(process.cwd(), "sql-wasm.wasm"),
+    "/app/node_modules/sql.js/dist/sql-wasm.wasm",
+    "/app/sql-wasm.wasm",
+    "/app/public/sql-wasm.wasm",
+  ];
+
+  for (const candidate of candidatePaths) {
+    if (fs.existsSync(candidate)) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
 export async function getDatabase(): Promise<Database> {
   if (dbInstance) {
     return dbInstance;
   }
 
   if (!SQL) {
-    SQL = await initSqlJs();
+    const wasmPath = findWasmPath();
+    if (wasmPath) {
+      try {
+        const wasmBuffer = fs.readFileSync(wasmPath);
+        const wasmBinary = wasmBuffer.buffer.slice(
+          wasmBuffer.byteOffset,
+          wasmBuffer.byteOffset + wasmBuffer.byteLength
+        ) as ArrayBuffer;
+        SQL = await initSqlJs({
+          locateFile: () => wasmPath,
+          wasmBinary,
+        });
+      } catch (err: any) {
+        logger.warn("DB_WASM_LOAD", `Failed reading wasmBinary from ${wasmPath} (${err.message}), trying locateFile fallback`);
+        SQL = await initSqlJs({
+          locateFile: () => wasmPath,
+        });
+      }
+    } else {
+      SQL = await initSqlJs();
+    }
   }
 
   if (fs.existsSync(DB_FILE)) {
