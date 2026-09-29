@@ -1,0 +1,124 @@
+extends layout
+
+block content
+  header.top-nav
+    .brand
+      .logo-icon ✨
+      .brand-title
+        h1 Google Gemini RAG Learning Lab
+        p Interactive Retrieval-Augmented Generation Tutorial & Playground
+    .nav-actions
+      .api-key-box
+        input#apiKeyInput(type="password" placeholder="Paste Gemini API Key (or use .env)")
+        button#saveApiKeyBtn.btn-secondary Set Key
+
+  main.container
+    // 5 Stages of RAG Architecture Hero Banner
+    section.rag-stages-card
+      h2 🎓 How RAG Works: The 5 Fundamental Stages
+      .stages-grid
+        .stage-box
+          .stage-num 1
+          h4 ✂️ Chunking
+          p Raw documents are split into short, overlapping segments.
+        .stage-box
+          .stage-num 2
+          h4 🔢 Embeddings
+          p Google Gemini converts chunks into 768-dim semantic vectors.
+        .stage-box
+          .stage-num 3
+          h4 🗄️ Vector Storage
+          p Chunks & vectors are indexed in a searchable vector store.
+        .stage-box
+          .stage-num 4
+          h4 🔍 Cosine Retrieval
+          p User query is vectorized; top matching chunks are retrieved.
+        .stage-box
+          .stage-num 5
+          h4 🧠 Grounded Gen
+          p Gemini synthesizes the answer using ONLY retrieved facts.
+
+    .grid-2col
+      // Left Column: Knowledge Base & Ingestion
+      section.panel
+        .panel-header
+          h3 📚 Knowledge Base (Vector Store)
+          .header-actions
+            button#seedSampleBtn.btn-primary.btn-sm 🌱 Seed Sample Docs
+            button#clearDocsBtn.btn-danger.btn-sm 🗑️ Clear All
+
+        .form-section
+          .form-section-header
+            h4 ➕ Ingest New Document
+            .example-picker
+              label(for="exampleDocSelect") 📋 Preset Example:
+              select#exampleDocSelect
+                option(value="") -- Choose Example Template --
+          form#addDocForm
+            .form-group
+              label(for="docTitle") Document Title
+              input#docTitle(type="text" placeholder="e.g. Gemini 2.5 Technical Spec" required)
+            .form-group
+              label(for="docContent") Document Content
+              textarea#docContent(rows="4" placeholder="Paste text or notes that Gemini should reference..." required)
+            #exampleQuestionsBox(style="display:none; margin-bottom: 1rem;")
+              span.hint-label 💡 Suggested Questions (click to ask):
+              .suggested-questions#suggestedQuestionsList
+            .form-row
+              .form-group
+                label(for="chunkSize") Chunk Size (chars)
+                input#chunkSize(type="number" value="250" min="50" max="1000")
+              .form-group
+                label(for="chunkOverlap") Overlap (chars)
+                input#chunkOverlap(type="number" value="40" min="0" max="200")
+            button(type="submit").btn-primary ⚡ Chunk, Vectorize & Index
+
+        .docs-list-section
+          .sub-header
+            h4 📑 Indexed Documents (<span id="docCount">0</span>) & Chunks (<span id="chunkCount">0</span>)
+            button#refreshDocsBtn.btn-link 🔄 Refresh
+          #documentsList.items-container
+            p.empty-text Loading knowledge base...
+
+      // Right Column: Ask & Visual Pipeline Inspector
+      section.panel
+        .panel-header
+          h3 💬 Test RAG Query Pipeline
+        .query-section
+          form#ragQueryForm
+            .form-group
+              label(for="queryInput") Ask a Question:
+              .input-with-button
+                input#queryInput(type="text" placeholder="e.g. How does Gemini compare or what are the 5 RAG stages?" required)
+                button(type="submit").btn-accent 🚀 Run RAG
+            .form-row
+              .form-group
+                label(for="topK") Top-K Chunks to Retrieve:
+                select#topK
+                  option(value="1") 1 chunk
+                  option(value="2") 2 chunks
+                  option(value="3" selected) 3 chunks
+                  option(value="5") 5 chunks
+              .form-group
+                label(for="simThreshold") Min Similarity Score:
+                input#simThreshold(type="number" step="0.05" min="0" max="1" value="0.0")
+
+        #queryLoading.loading-box(style="display:none;")
+          .spinner
+          p Vectorizing query & querying Google Gemini...
+
+        #ragResultArea(style="display:none;")
+          // AI Generated Answer Box
+          .result-card
+            .result-header
+              h4 💡 Gemini AI Grounded Answer
+              span.badge.badge-model#modelBadge gemini-3.8-flash
+            .result-body#geminiAnswerText
+            .sources-footer
+              strong 📌 Cited Retrieved Context Sources:
+              #retrievedSourcesList.sources-chips
+
+          // Step by step breakdown
+          .pipeline-breakdown
+            h4 🔬 Step-by-Step Pipeline Inspector
+            .steps-accordion#pipelineStepsList
